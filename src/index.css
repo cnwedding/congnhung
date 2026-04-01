@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;500;600&display=swap");
+
+@font-face {
+  font-family: "NVNValky";
+  src: url("./assets/font/NVNValky-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NVNValky";
+  src: url("./assets/font/NVNValky-Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "DFVN Big Bang";
+  src: url("./assets/font/DFVN Big Bang.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    scroll-behavior: smooth;
+    @apply text-wedding-text font-sans;
+  }
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background-image: url("https://w.ladicdn.com/s768x0/649340684a3700001217851c/nen-be-doc-20250527032724-snv_b.jpg");
+  background-size: cover;
+  background-position: center top;
+  background-repeat: repeat-y;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
