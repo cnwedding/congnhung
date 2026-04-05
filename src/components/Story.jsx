@@ -22,8 +22,19 @@ const StoryMusicControl = ({ musicSrc, id }) => {
         setIsPlaying(false);
       }
     };
+    const handleGlobalPauseAll = () => {
+      if (isPlaying) {
+        audioRef.current?.pause();
+        setIsPlaying(false);
+        window.dispatchEvent(new CustomEvent("global-pause", { detail: id }));
+      }
+    };
     window.addEventListener("global-play", handleGlobalPlay);
-    return () => window.removeEventListener("global-play", handleGlobalPlay);
+    window.addEventListener("global-pause-all", handleGlobalPauseAll);
+    return () => {
+      window.removeEventListener("global-play", handleGlobalPlay);
+      window.removeEventListener("global-pause-all", handleGlobalPauseAll);
+    };
   }, [isPlaying, id]);
 
   const togglePlay = () => {
@@ -60,7 +71,7 @@ const StoryMusicControl = ({ musicSrc, id }) => {
   const progressPercent = duration ? (currentTime / duration) * 100 : 0;
 
   return (
-    <>
+    <div className="w-full">
       <audio
         ref={audioRef}
         src={musicSrc}
@@ -142,13 +153,28 @@ const StoryMusicControl = ({ musicSrc, id }) => {
           </svg>
         </button>
       </div>
-    </>
+    </div>
   );
 };
 
 export default function Story() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          window.dispatchEvent(new CustomEvent("global-pause-all"));
+        }
+      },
+      { threshold: 0 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="story" className="py-10 px-2 relative z-10 w-full">
+    <section ref={sectionRef} id="story" className="py-10 px-2 relative z-10 w-full">
       <div className="text-center mb-12">
         <h2 className="text-titleSection font-nvnvalky text-[#1b3a68] mb-2 text-center uppercase tracking-[1px]">
           Chuyện Chúng Mình
@@ -156,14 +182,14 @@ export default function Story() {
         <div className="w-12 h-px bg-[#1b3a68] mx-auto opacity-30 mt-4"></div>
       </div>
 
-      <div className="relative border-l border-[#1b3a68]/20 ml-2 space-y-12 pb-8">
+      <div className="relative border-l border-[#1b3a68]/20 ml-3 space-y-12 pb-8">
         {/* Khối 1 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0 }}
-          className="relative pl-4"
+          className="relative pl-5"
         >
           <div className="absolute w-3 h-3 rounded-full bg-[#1b3a68] -left-[6px] top-2 border-[3px] border-white shadow-sm ring-1 ring-[#1b3a68]/20"></div>
           <div className="relative aspect-square w-full rounded-[24px] p-5 shadow-[0_4px_20px_rgb(0,0,0,0.15)] border border-white/40 overflow-hidden group flex flex-col justify-end">
@@ -180,7 +206,7 @@ export default function Story() {
                 <p className="text-white font-script tracking-wide text-[24px]">
                   Tháng 11, 2023
                 </p>
-                <p className="text-white text-[11.5px] font-sans text-justify font-medium drop-shadow-md">
+                <p className="text-white text-[13px] font-sans text-justify font-medium drop-shadow-md">
                   Với xác suất gặp nhau chỉ 0.00487, chúng mình đã vượt qua mọi
                   rào cản, cùng nhau bước vào hành trình phiêu lưu kéo dài trọn
                   đời.
@@ -197,7 +223,7 @@ export default function Story() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="relative pl-4"
+          className="relative pl-5"
         >
           <div className="absolute w-3 h-3 rounded-full bg-[#1b3a68] -left-[6px] top-2 border-[3px] border-white shadow-sm ring-1 ring-[#1b3a68]/20"></div>
           <div className="relative aspect-square w-full rounded-[24px] p-5 shadow-[0_4px_20px_rgb(0,0,0,0.15)] border border-white/40 overflow-hidden group flex flex-col justify-end">
@@ -213,7 +239,7 @@ export default function Story() {
                 <p className="text-white font-script tracking-wide text-[24px]">
                   Tháng 10, 2024
                 </p>
-                <p className="text-white text-[11.5px] font-sans text-justify font-medium drop-shadow-md">
+                <p className="text-white text-[13px] font-sans text-justify font-medium drop-shadow-md">
                   Tình yêu lớn dần trong những điều bình dị nhất, khi cả hai
                   nhận ra rằng chỉ cần có nhau, mọi ngày đều trở nên đặc biệt.
                 </p>
@@ -229,7 +255,7 @@ export default function Story() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="relative pl-4"
+          className="relative pl-5"
         >
           <div className="absolute w-3 h-3 rounded-full bg-[#1b3a68] -left-[6px] top-2 border-[3px] border-white shadow-sm ring-1 ring-[#1b3a68]/20"></div>
           <div className="relative aspect-square w-full rounded-[24px] p-5 shadow-[0_4px_20px_rgb(0,0,0,0.15)] border border-white/40 overflow-hidden group flex flex-col justify-end">
@@ -245,7 +271,7 @@ export default function Story() {
                 <p className="text-white font-script tracking-wide text-[24px]">
                   Tháng 12, 2025
                 </p>
-                <p className="text-white text-[11.5px] font-sans text-justify font-medium drop-shadow-md">
+                <p className="text-white text-[13px] font-sans text-justify font-medium drop-shadow-md">
                   Khi mọi do dự dần nhường chỗ cho chắc chắn, một lời hứa được
                   nói ra - giản dị nhưng là mãi mãi.
                 </p>
@@ -261,7 +287,7 @@ export default function Story() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="relative pl-4"
+          className="relative pl-5"
         >
           <div className="absolute w-3 h-3 rounded-full bg-[#1b3a68] -left-[6px] top-2 border-[3px] border-white shadow-sm ring-1 ring-[#1b3a68]/20"></div>
           <div className="relative aspect-square w-full rounded-[24px] p-5 shadow-[0_4px_20px_rgb(0,0,0,0.15)] border border-white/40 overflow-hidden group flex flex-col justify-end">
@@ -277,7 +303,7 @@ export default function Story() {
                 <p className="text-white font-script tracking-wide text-[24px]">
                   Tháng 5, 2026
                 </p>
-                <p className="text-white text-[11.5px] font-sans text-justify font-medium drop-shadow-md">
+                <p className="text-white text-[13px] font-sans text-justify font-medium drop-shadow-md">
                   Giữa hàng vạn người, ta gặp được người mình nên gặp. giữa hàng
                   vạn năm, trong cõi thời gian hoang hoải, không sớm một bước,
                   cũng chẳng muộn một giây, chỉ vừa vặn tìm thấy nhau.

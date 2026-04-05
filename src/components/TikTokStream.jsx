@@ -6,6 +6,8 @@ import giftBox from "../assets/gift-box.png";
 import tiktok from "../assets/tiktok.webp";
 import codauGiftImg from "../assets/codaugift.webp";
 import chureGiftImg from "../assets/churegift.webp";
+import qrcodau from "../assets/qrcodau.webp";
+import qrchure from "../assets/qrchure.webp";
 import { heartIcon } from "./GiftIcon";
 
 // --- SUPABASE CONFIG ---
@@ -46,15 +48,13 @@ export default function TikTokStream() {
     {
       id: "gai",
       name: "Gửi quà cô dâu",
-      qrUrl:
-        "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=MungCuoiNhaGai",
+      qrUrl: qrcodau,
       image: codauGiftImg,
     },
     {
       id: "trai",
       name: "Gửi quà chú rể",
-      qrUrl:
-        "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=MungCuoiNhaTrai",
+      qrUrl: qrchure,
       image: chureGiftImg,
     },
   ];
@@ -68,6 +68,10 @@ export default function TikTokStream() {
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const urlParams = new URLSearchParams(
+    typeof window !== "undefined" ? window.location.search : "",
+  );
+  const guestName = urlParams.get("name") || "Bạn";
 
   // Fetch messages
   const fetchMessages = useCallback(async () => {
@@ -93,15 +97,24 @@ export default function TikTokStream() {
   // Initialize visible messages when data first loads
   useEffect(() => {
     if (allMessages.length === 0) return;
+
+    const welcomeMessage = {
+      id: "welcome-msg",
+      name: "",
+      content: `Chào mừng ${guestName} đã đến với phiên live của chúng tôi, cùng gửi lời chúc đến cô dâu chú rể nào`,
+      _key: `welcome-msg-init`,
+    };
+
     const initial = allMessages
-      .slice(0, Math.min(5, allMessages.length))
+      .slice(0, Math.min(4, allMessages.length))
       .map((m, i) => ({
         ...m,
         _key: `${m.id ?? m.created_at}-init-${i}`,
       }));
-    setVisibleMessages(initial);
+
+    setVisibleMessages([...initial, welcomeMessage]);
     messageIndexRef.current = initial.length % allMessages.length;
-  }, [allMessages.length > 0 ? allMessages[0]?.id : null]); // only on first real load
+  }, [allMessages.length > 0 ? allMessages[0]?.id : null, guestName]); // only on first real load
 
   // Cycle: every 2s push next message in, remove the oldest if > 5
   useEffect(() => {
@@ -161,10 +174,10 @@ export default function TikTokStream() {
     <div className="absolute backdrop-blur-0 inset-x-0 bottom-0 z-50 pointer-events-none h-screen flex flex-col justify-end">
       {/* Comments Overlay - hidden when minimized */}
       {!isMinimized && (
-        <div className="relative h-[164px] w-full overflow-hidden px-4 flex flex-col justify-end gap-2 pb-2">
+        <div className="relative h-[180px] w-full overflow-hidden px-4 flex flex-col justify-end gap-2 pb-2">
           {/* <div className="absolute top-0 left-0 right-0 h-full pointer-events-none bg-gradient-to-b from-black/20 to-transparent"></div> */}
           {/* <div className="absolute bottom-0 left-0 right-0 h-1/2 pointer-events-none bg-gradient-to-t from-black/20 to-transparent"></div> */}
-          <div className="relative h-[164px] max-w-[285px] overflow-hidden flex flex-col justify-end gap-2">
+          <div className="relative h-[180px] max-h-[calc(100vh/3)] max-w-[285px] overflow-hidden flex flex-col justify-end gap-2">
             <AnimatePresence initial={false}>
               {visibleMessages.map((comment) => (
                 <motion.div
@@ -173,9 +186,13 @@ export default function TikTokStream() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }}
                   transition={{ duration: 0.35, ease: "easeOut" }}
-                  className="bg-[#1b3a68]/70 rounded-2xl px-2.5 py-0.5 flex flex-col items-start justify-center w-fit shrink-0"
+                  className={`${comment.id === "welcome-msg" ? "bg-[#ff3b5c]/80" : "bg-[#1b3a68]/70"} rounded-2xl px-2.5 py-0.5 flex flex-col items-start justify-center w-fit shrink-0`}
                 >
-                  <span className="text-white text-[13px] block break-words">{`${comment.name}`}</span>
+                  <span
+                    className={`${comment.id === "welcome-msg" ? "text-white/90" : "text-white"} text-[13px] block break-words`}
+                  >
+                    {comment.name}
+                  </span>
                   <p className="text-white font-bold text-[13px] block break-words">
                     <span className="leading-relaxed">{comment.content}</span>
                   </p>

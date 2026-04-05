@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import GiftIcon from "./GiftIcon";
+import qrcodau from "../assets/qrcodau.webp";
+import qrchure from "../assets/qrchure.webp";
 
 export default function Gifting() {
   const [selectedFamily, setSelectedFamily] = useState(null);
@@ -10,15 +12,13 @@ export default function Gifting() {
     {
       id: "trai",
       name: "Nhà Trai",
-      qrUrl:
-        "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=MungCuoiNhaTrai", // Placeholder
+      qrUrl: qrchure,
       description: "Mừng cưới cho Chú rể",
     },
     {
       id: "gai",
       name: "Nhà Gái",
-      qrUrl:
-        "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=MungCuoiNhaGai", // Placeholder
+      qrUrl: qrcodau,
       description: "Mừng cưới cho Cô dâu",
     },
   ];

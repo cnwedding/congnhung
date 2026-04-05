@@ -16,7 +16,7 @@ const events = [
     time: "08h30 - Chủ Nhật",
     date: "24.05.2026",
     lunarDate: "(Tức ngày 08 Tháng 04 Năm Bính Ngọ)",
-    venueName: "NHÀ HÀNG TIỆC CƯỚI",
+    venueName: "TƯ GIA NHÀ GÁI",
     address: "Thôn Hưng Cường - Xã Vĩnh Bảo - TP Hải Phòng",
     mapLabel: "https://maps.app.goo.gl/ir563e6gGskysNVVA",
   },
@@ -101,11 +101,11 @@ export default function EventDetails() {
                 className={`flex w-full ${isRight ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`bg-[#1b3a68] text-white font-nvnvalky uppercase px-8 py-3 text-[24px] tracking-widest shadow-md ${
+                  className={`bg-[#1b3a68] text-white font-nvnvalky uppercase px-8 py-4 text-[24px] leading-[24px] tracking-widest shadow-md ${
                     isRight ? "rounded-l-full" : "rounded-r-full"
                   }`}
                 >
-                  {event.title}
+                  <p className="mt-0.5">{event.title}</p>
                 </div>
               </div>
 
