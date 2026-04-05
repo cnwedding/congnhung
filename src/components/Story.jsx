@@ -177,10 +177,10 @@ export default function Story() {
             <div className="z-10 w-full">
               {/* Bạn có thể dễ dàng chèn custom title / text JSX vào đây */}
               <div className="mb-4 px-1">
-                <p className="text-white/80 font-script tracking-wide text-[24px]">
+                <p className="text-white font-script tracking-wide text-[24px]">
                   Tháng 11, 2023
                 </p>
-                <p className="text-white/80 text-[11.5px] font-sans text-justify font-medium drop-shadow-md">
+                <p className="text-white text-[11.5px] font-sans text-justify font-medium drop-shadow-md">
                   Với xác suất gặp nhau chỉ 0.00487, chúng mình đã vượt qua mọi
                   rào cản, cùng nhau bước vào hành trình phiêu lưu kéo dài trọn
                   đời.
@@ -210,10 +210,10 @@ export default function Story() {
             <div className="absolute h-[70%] top-[30%] inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/0"></div>
             <div className="z-10 w-full">
               <div className="mb-4 px-1">
-                <p className="text-white/80 font-script tracking-wide text-[24px]">
+                <p className="text-white font-script tracking-wide text-[24px]">
                   Tháng 10, 2024
                 </p>
-                <p className="text-white/80 text-[11.5px] font-sans text-justify font-medium drop-shadow-md">
+                <p className="text-white text-[11.5px] font-sans text-justify font-medium drop-shadow-md">
                   Tình yêu lớn dần trong những điều bình dị nhất, khi cả hai
                   nhận ra rằng chỉ cần có nhau, mọi ngày đều trở nên đặc biệt.
                 </p>
@@ -242,10 +242,10 @@ export default function Story() {
             <div className="absolute h-[70%] top-[30%] inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/0"></div>
             <div className="z-10 w-full">
               <div className="mb-4 px-1">
-                <p className="text-white/80 font-script tracking-wide text-[24px]">
+                <p className="text-white font-script tracking-wide text-[24px]">
                   Tháng 12, 2025
                 </p>
-                <p className="text-white/80 text-[11.5px] font-sans text-justify font-medium drop-shadow-md">
+                <p className="text-white text-[11.5px] font-sans text-justify font-medium drop-shadow-md">
                   Khi mọi do dự dần nhường chỗ cho chắc chắn, một lời hứa được
                   nói ra - giản dị nhưng là mãi mãi.
                 </p>
@@ -274,10 +274,10 @@ export default function Story() {
             <div className="absolute h-[70%] top-[30%] inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/0"></div>
             <div className="z-10 w-full">
               <div className="mb-4 px-1">
-                <p className="text-white/80 font-script tracking-wide text-[24px]">
+                <p className="text-white font-script tracking-wide text-[24px]">
                   Tháng 5, 2026
                 </p>
-                <p className="text-white/80 text-[11.5px] font-sans text-justify font-medium drop-shadow-md">
+                <p className="text-white text-[11.5px] font-sans text-justify font-medium drop-shadow-md">
                   Giữa hàng vạn người, ta gặp được người mình nên gặp. giữa hàng
                   vạn năm, trong cõi thời gian hoang hoải, không sớm một bước,
                   cũng chẳng muộn một giây, chỉ vừa vặn tìm thấy nhau.
