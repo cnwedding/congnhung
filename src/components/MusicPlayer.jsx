@@ -30,6 +30,7 @@ const MusicNote = ({ id, onComplete }) => {
 export default function MusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [notes, setNotes] = useState([]);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -48,10 +49,67 @@ export default function MusicPlayer() {
     setNotes((prev) => prev.filter((noteId) => noteId !== id));
   };
 
+  const wasInterruptedRef = useRef(false);
+  const resumeTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    const handleGalleryState = (e) => setIsGalleryOpen(e.detail);
+    window.addEventListener("gallery-state", handleGalleryState);
+    return () =>
+      window.removeEventListener("gallery-state", handleGalleryState);
+  }, []);
+
+  useEffect(() => {
+    const handleGlobalPlay = (e) => {
+      if (e.detail !== "main-music") {
+        if (resumeTimeoutRef.current) {
+          clearTimeout(resumeTimeoutRef.current);
+          resumeTimeoutRef.current = null;
+        }
+        setIsPlaying((prev) => {
+          if (prev) {
+            audioRef.current?.pause();
+            wasInterruptedRef.current = true;
+            return false;
+          }
+          return prev;
+        });
+      }
+    };
+
+    const handleGlobalPause = (e) => {
+      if (e.detail !== "main-music") {
+        if (wasInterruptedRef.current) {
+          resumeTimeoutRef.current = setTimeout(() => {
+            if (wasInterruptedRef.current) {
+              audioRef.current?.play().catch((err) => console.log(err));
+              setIsPlaying(true);
+              wasInterruptedRef.current = false;
+            }
+          }, 3000);
+        }
+      }
+    };
+
+    window.addEventListener("global-play", handleGlobalPlay);
+    window.addEventListener("global-pause", handleGlobalPause);
+    return () => {
+      window.removeEventListener("global-play", handleGlobalPlay);
+      window.removeEventListener("global-pause", handleGlobalPause);
+      if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+    };
+  }, []);
+
   const togglePlay = () => {
     if (isPlaying) {
       audioRef.current.pause();
+      wasInterruptedRef.current = false;
+      if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
     } else {
+      window.dispatchEvent(
+        new CustomEvent("global-play", { detail: "main-music" }),
+      );
+      wasInterruptedRef.current = false;
       audioRef.current
         .play()
         .catch((err) => console.log("Playback blocked:", err));
@@ -60,9 +118,11 @@ export default function MusicPlayer() {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 lg:bottom-10 lg:right-10 z-50 flex flex-col items-center">
+    <div
+      className={`absolute flex flex-col items-center transition-all duration-500 pointer-events-auto ${isGalleryOpen ? "top-6 left-6 z-[120]" : "top-4 right-4 z-[60]"}`}
+    >
+      {" "}
       <audio ref={audioRef} src={musicFile} loop playsInline preload="auto" />
-
       {/* Floating Notes Container */}
       <div className="relative w-full h-0 flex justify-center">
         <AnimatePresence>
@@ -71,12 +131,11 @@ export default function MusicPlayer() {
           ))}
         </AnimatePresence>
       </div>
-
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={togglePlay}
-        className={`bg-white/80 backdrop-blur-md shadow-lg p-3.5 rounded-full ${isPlaying ? "text-wedding-gold" : "text-gray-400"} hover:bg-white transition-all flex items-center justify-center border border-wedding-gold/20 z-10`}
+        className={`bg-white/80 backdrop-blur-md shadow-lg p-2 rounded-full ${isPlaying ? "text-[#1b3a68]" : "text-gray-400"} hover:bg-white transition-all flex items-center justify-center border border-[#1b3a68]/20 z-10 pointer-events-auto`}
         aria-label="Toggle music"
       >
         {isPlaying ? (
@@ -91,9 +150,9 @@ export default function MusicPlayer() {
         )}
 
         {isPlaying && (
-          <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-wedding-gold opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-4 w-4 bg-wedding-gold"></span>
+          <span className="absolute -top-0.5 -right-0.5 flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1b3a68] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-[#1b3a68]"></span>
           </span>
         )}
       </motion.button>

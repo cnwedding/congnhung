@@ -30,7 +30,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="absolute inset-0 flex flex-col items-center justify-end pb-6 text-white z-10"
+          className="absolute inset-0 flex flex-col items-center justify-end pb-8 text-white z-10"
         >
           <div className="flex flex-col items-center justify-center mb-4 w-full">
             <div className="flex items-center gap-3 w-full ml-10">
@@ -47,8 +47,16 @@ export default function Hero() {
               NHUNG
             </h1>
           </div>
-          <p className="tracking-[0.5em] text-xs uppercase font-bigbang font-light opacity-90 drop-shadow-md">
-            WE GET MARRIED
+          <p
+            className="tracking-[1px] text-[20px] text-[#1b3a68] font-bigbang font-bold absolute top-0"
+            style={{
+              top: "30px",
+            }}
+          >
+            Welcome to our wedding
+          </p>
+          <p className="tracking-[1px] text-[20px] text-[#ffffffd1] font-bigbang absolute bottom-5">
+            24.05.2026
           </p>
         </motion.div>
       </div>
@@ -61,9 +69,9 @@ export default function Hero() {
         className="px-8 py-10 text-center z-1"
       >
         <p className="font-script text-[clamp(24px,6vw,28px)] leading-8 text-[#1b3a68] italic opacity-80">
-          "Hôn nhân là chuyện cả đời,
+          "I have loved you for a thousand years,
           <br />
-          Yêu người vừa ý, cưới người mình thương."
+          I'll love you for a thousand more."
         </p>
       </motion.div>
 
@@ -138,15 +146,15 @@ export default function Hero() {
           <p className="font-bold mb-3 uppercase tracking-widest text-[#1b3a68]/80">
             Nhà Trai
           </p>
-          <p className="mb-1">Ông: Nguyễn Duy Chiến</p>
-          <p>Bà: Nguyễn Thị Lộc</p>
+          <p className="mb-1 font-bigbang">Ông: Ngô Văn Kiệm</p>
+          <p className="font-bigbang">Bà: Khúc Thị Liên</p>
         </div>
         <div className="flex-1 text-left pl-2">
           <p className="font-bold mb-3 uppercase tracking-widest text-[#1b3a68]/80">
             Nhà Gái
           </p>
-          <p className="mb-1">Ông: Lê Chí Linh</p>
-          <p>Bà: Mai Thị Tố Trinh</p>
+          <p className="mb-1 font-bigbang">Ông: Trần Ngọc Giản</p>
+          <p className="font-bigbang">Bà: Phạm Thị Nguyệt</p>
         </div>
       </motion.div>
       <img

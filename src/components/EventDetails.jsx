@@ -4,30 +4,30 @@ import { motion } from "framer-motion";
 const events = [
   {
     title: "Lễ Vu Quy",
-    time: "10h00 - Thứ Tư",
-    date: "14.10.2026",
-    lunarDate: "(Tức ngày 04 Tháng 09 Năm Bính Ngọ)",
+    time: "09h00 - Thứ Hai",
+    date: "18.05.2026",
+    lunarDate: "(Tức ngày 02 Tháng 04 Năm Bính Ngọ)",
     venueName: "TƯ GIA NHÀ GÁI",
-    address: "Xã Vĩnh Bảo - TP. Hải Phòng",
-    mapLabel: "XEM CHỈ ĐƯỜNG",
+    address: "Thôn Hưng Cường - Xã Vĩnh Bảo - TP Hải Phòng",
+    mapLabel: "https://maps.app.goo.gl/ir563e6gGskysNVVA",
   },
   {
     title: "Lễ Cưới Nhà Gái",
-    time: "11h30 - Thứ Tư",
-    date: "14.10.2026",
-    lunarDate: "(Tức ngày 04 Tháng 09 Năm Bính Ngọ)",
+    time: "08h30 - Chủ Nhật",
+    date: "24.05.2026",
+    lunarDate: "(Tức ngày 08 Tháng 04 Năm Bính Ngọ)",
     venueName: "NHÀ HÀNG TIỆC CƯỚI",
-    address: "Xã Vĩnh Bảo - TP. Hải Phòng",
-    mapLabel: "XEM CHỈ ĐƯỜNG",
+    address: "Thôn Hưng Cường - Xã Vĩnh Bảo - TP Hải Phòng",
+    mapLabel: "https://maps.app.goo.gl/ir563e6gGskysNVVA",
   },
   {
     title: "Lễ Cưới Nhà Trai",
-    time: "09h30 - Thứ Năm",
-    date: "15.10.2026",
-    lunarDate: "(Tức ngày 05 Tháng 09 Năm Bính Ngọ)",
+    time: "08h00 - Chủ Nhật",
+    date: "24.05.2026",
+    lunarDate: "(Tức ngày 08 Tháng 04 Năm Bính Ngọ)",
     venueName: "TƯ GIA NHÀ TRAI",
-    address: "Xã Diêm Điền - Hưng Yên",
-    mapLabel: "XEM CHỈ ĐƯỜNG",
+    address: "Thôn Hạ Đồng - Xã Thuỵ Anh - Tỉnh Hưng Yên",
+    mapLabel: "https://maps.app.goo.gl/ZVe5ouPv62o8cGjk8",
   },
 ];
 
@@ -37,7 +37,10 @@ export default function EventDetails() {
   );
   const guestName = urlParams.get("name") || "Bạn & Người thương";
 
-  const pathname = typeof window !== "undefined" ? window.location.pathname.toLowerCase() : "/";
+  const pathname =
+    typeof window !== "undefined"
+      ? window.location.pathname.toLowerCase()
+      : "/";
 
   let displayEvents = events;
   if (pathname === "/cong") {
@@ -141,10 +144,12 @@ export default function EventDetails() {
 
                   <div className="mt-3">
                     <a
-                      href="#"
+                      href={event.mapLabel}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="inline-block px-8 py-2 bg-[#1b3a68] text-white text-[12px] font-bold uppercase tracking-widest rounded-full hover:bg-opacity-90 transition-colors shadow-md"
                     >
-                      {event.mapLabel}
+                      XEM CHỈ ĐƯỜNG
                     </a>
                   </div>
                 </div>

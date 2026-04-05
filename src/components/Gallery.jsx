@@ -43,6 +43,13 @@ export default function Gallery() {
   // Reset scale when image changes or closes
   React.useEffect(() => {
     setScale(1);
+    
+    // Dispatch event to let other components know gallery is open/closed
+    if (selectedIndex !== null) {
+      window.dispatchEvent(new CustomEvent("gallery-state", { detail: true }));
+    } else {
+      window.dispatchEvent(new CustomEvent("gallery-state", { detail: false }));
+    }
   }, [selectedIndex]);
 
   const handleWheel = (e) => {
