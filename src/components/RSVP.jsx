@@ -20,7 +20,7 @@ export default function RSVP() {
     e.preventDefault();
     setIsSubmitting(true);
     setMessage("");
-    
+
     try {
       const { error } = await supabase.from("rsvp").insert([
         {
@@ -29,16 +29,16 @@ export default function RSVP() {
           guestNumber: formData.guests,
         },
       ]);
-      
+
       if (error) throw error;
-      
+
       setFormData({
         name: "",
         attending: "yes",
         guests: "1",
       });
       setMessage("Gửi phản hồi thành công");
-      
+
       setTimeout(() => setMessage(""), 5000);
     } catch (error) {
       alert("Không thể gửi phản hồi: " + error.message);
@@ -59,7 +59,7 @@ export default function RSVP() {
           Xác Nhận Tham Dự
         </motion.h2>
         <p className="text-[#1b3a68]/70 text-[11px] uppercase tracking-widest mb-4">
-          Vui lòng phản hồi trước 01.09.2026
+          Vui lòng phản hồi trước 20.05.2026
         </p>
         <div className="w-12 h-px bg-[#1b3a68] mx-auto opacity-30 mt-4"></div>
       </div>
@@ -78,101 +78,103 @@ export default function RSVP() {
             </div>
           )}
           <div>
-              <label
-                htmlFor="name"
-                className="block text-[11px] font-bold uppercase tracking-widest text-[#1b3a68]/80 mb-2"
-              >
-                Họ & Tên
-              </label>
-              <input
-                type="text"
-                id="name"
-                required
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                className="w-full bg-white border border-[#1b3a68]/10 p-4 outline-none focus:ring-1 focus:ring-[#1b3a68]/50 transition-shadow rounded-xl text-gray-700 text-sm shadow-inner"
-                placeholder="Nhập tên của bạn..."
-              />
-            </div>
-
-            <div>
-              <label className="block text-[11px] font-bold uppercase tracking-widest text-[#1b3a68]/80 mb-2">
-                Bạn sẽ tham dự chứ?
-              </label>
-              <div className="flex flex-col gap-3">
-                <label className="flex items-center gap-3 cursor-pointer bg-white p-3 rounded-xl border border-transparent hover:border-[#1b3a68]/20 transition-colors shadow-sm">
-                  <input
-                    type="radio"
-                    name="attending"
-                    value="yes"
-                    checked={formData.attending === "yes"}
-                    onChange={(e) =>
-                      setFormData({ ...formData, attending: e.target.value })
-                    }
-                    className="accent-[#1b3a68] w-4 h-4"
-                  />
-                  <span className="text-[13px] text-gray-700 font-medium">
-                    Có, Mình sẽ đến!
-                  </span>
-                </label>
-                <label className="flex items-center gap-3 cursor-pointer bg-white p-3 rounded-xl border border-transparent hover:border-[#1b3a68]/20 transition-colors shadow-sm">
-                  <input
-                    type="radio"
-                    name="attending"
-                    value="no"
-                    checked={formData.attending === "no"}
-                    onChange={(e) =>
-                      setFormData({ ...formData, attending: e.target.value })
-                    }
-                    className="accent-[#1b3a68] w-4 h-4"
-                  />
-                  <span className="text-[13px] text-gray-700 font-medium tracking-tight">
-                    Tiếc quá, mình không thể tham dự
-                  </span>
-                </label>
-              </div>
-            </div>
-
-            {formData.attending === "yes" && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                className="overflow-hidden"
-              >
-                <label
-                  htmlFor="guests"
-                  className="block text-[11px] font-bold uppercase tracking-widest text-[#1b3a68]/80 mb-2 mt-4"
-                >
-                  Số Lượng Khách Đi Cùng
-                </label>
-                <select
-                  id="guests"
-                  value={formData.guests}
-                  onChange={(e) =>
-                    setFormData({ ...formData, guests: e.target.value })
-                  }
-                  className="w-full bg-white border border-[#1b3a68]/10 p-4 outline-none focus:ring-1 focus:ring-[#1b3a68]/50 transition-shadow rounded-xl text-gray-700 text-sm cursor-pointer shadow-inner appearance-none relative"
-                >
-                  <option value="1">1 Người (Chỉ mình tôi)</option>
-                  <option value="2">2 Người</option>
-                  <option value="3">3 Người</option>
-                  <option value="4">4 Người</option>
-                  <option value="5">5 Người</option>
-                </select>
-              </motion.div>
-            )}
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-[#1b3a68] text-white py-4 font-nvnvalky text-lg tracking-wider hover:bg-opacity-90 shadow-[0_4px_15px_rgb(27,58,104,0.3)] transition-all duration-300 mt-6 rounded-xl relative overflow-hidden group disabled:opacity-70"
+            <label
+              htmlFor="name"
+              className="block text-[11px] font-bold uppercase tracking-widest text-[#1b3a68]/80 mb-2"
             >
-              <span className="relative z-10">{isSubmitting ? "Đang gửi..." : "Gửi Phản Hồi"}</span>
-              <div className="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
-            </button>
-          </form>
+              Họ & Tên
+            </label>
+            <input
+              type="text"
+              id="name"
+              required
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+              className="w-full bg-white border border-[#1b3a68]/10 p-4 outline-none focus:ring-1 focus:ring-[#1b3a68]/50 transition-shadow rounded-xl text-gray-700 text-sm shadow-inner"
+              placeholder="Nhập tên của bạn..."
+            />
+          </div>
+
+          <div>
+            <label className="block text-[11px] font-bold uppercase tracking-widest text-[#1b3a68]/80 mb-2">
+              Bạn sẽ tham dự chứ?
+            </label>
+            <div className="flex flex-col gap-3">
+              <label className="flex items-center gap-3 cursor-pointer bg-white p-3 rounded-xl border border-transparent hover:border-[#1b3a68]/20 transition-colors shadow-sm">
+                <input
+                  type="radio"
+                  name="attending"
+                  value="yes"
+                  checked={formData.attending === "yes"}
+                  onChange={(e) =>
+                    setFormData({ ...formData, attending: e.target.value })
+                  }
+                  className="accent-[#1b3a68] w-4 h-4"
+                />
+                <span className="text-[13px] text-gray-700 font-medium">
+                  Có, Mình sẽ đến!
+                </span>
+              </label>
+              <label className="flex items-center gap-3 cursor-pointer bg-white p-3 rounded-xl border border-transparent hover:border-[#1b3a68]/20 transition-colors shadow-sm">
+                <input
+                  type="radio"
+                  name="attending"
+                  value="no"
+                  checked={formData.attending === "no"}
+                  onChange={(e) =>
+                    setFormData({ ...formData, attending: e.target.value })
+                  }
+                  className="accent-[#1b3a68] w-4 h-4"
+                />
+                <span className="text-[13px] text-gray-700 font-medium tracking-tight">
+                  Tiếc quá, mình không thể tham dự
+                </span>
+              </label>
+            </div>
+          </div>
+
+          {formData.attending === "yes" && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              className="overflow-hidden"
+            >
+              <label
+                htmlFor="guests"
+                className="block text-[11px] font-bold uppercase tracking-widest text-[#1b3a68]/80 mb-2 mt-4"
+              >
+                Số Lượng Khách Đi Cùng
+              </label>
+              <select
+                id="guests"
+                value={formData.guests}
+                onChange={(e) =>
+                  setFormData({ ...formData, guests: e.target.value })
+                }
+                className="w-full bg-white border border-[#1b3a68]/10 p-4 outline-none focus:ring-1 focus:ring-[#1b3a68]/50 transition-shadow rounded-xl text-gray-700 text-sm cursor-pointer shadow-inner appearance-none relative"
+              >
+                <option value="1">1 Người (Chỉ mình tôi)</option>
+                <option value="2">2 Người</option>
+                <option value="3">3 Người</option>
+                <option value="4">4 Người</option>
+                <option value="5">5 Người</option>
+              </select>
+            </motion.div>
+          )}
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-[#1b3a68] text-white py-4 font-nvnvalky text-lg tracking-wider hover:bg-opacity-90 shadow-[0_4px_15px_rgb(27,58,104,0.3)] transition-all duration-300 mt-6 rounded-xl relative overflow-hidden group disabled:opacity-70"
+          >
+            <span className="relative z-10">
+              {isSubmitting ? "Đang gửi..." : "Gửi Phản Hồi"}
+            </span>
+            <div className="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+          </button>
+        </form>
       </motion.div>
     </section>
   );
