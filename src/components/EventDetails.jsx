@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const events = [
   {
-    title: "Lễ Vu Quy",
+    title: "Lễ Ăn Hỏi",
     time: "09h00 - Thứ Hai",
     date: "18.05.2026",
     lunarDate: "(Tức ngày 02 Tháng 04 Năm Bính Ngọ)",
