@@ -68,10 +68,28 @@ export default function TikTokStream() {
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const urlParams = new URLSearchParams(
-    typeof window !== "undefined" ? window.location.search : "",
-  );
-  const guestName = urlParams.get("name") || "Bạn";
+
+  const getGuestName = () => {
+    if (typeof window === "undefined") return "Bạn";
+    const pathname = window.location.pathname;
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // Priority 1: /invite/:slug
+    if (pathname.startsWith("/invite/")) {
+      const slug = pathname.replace("/invite/", "");
+      if (slug) {
+        return decodeURIComponent(slug).replace(/-/g, " ");
+      }
+    }
+    
+    // Priority 2: ?name=...
+    const nameFromQuery = urlParams.get("name");
+    if (nameFromQuery) return nameFromQuery;
+    
+    return "Bạn";
+  };
+
+  const guestName = getGuestName();
 
   // Fetch messages
   const fetchMessages = useCallback(async () => {
